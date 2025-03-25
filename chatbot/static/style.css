@@ -1,0 +1,478 @@
+/* Main Code */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  scroll-behavior: smooth;
+  font-family: 'Poppins', sans-serif;
+}
+
+:root {
+  --background: rgb(24, 24, 24);
+  --second-background: rgb(21, 21, 21);
+  --accent-color: #f4a261;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--background);
+  color: #333;
+}
+
+/* Loader */
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: var(--background);
+  z-index: 9999;
+}
+
+.loading-text {
+  color: white;
+  font-size: 14pt;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.dot {
+  margin-left: 3px;
+  animation: blink 1.5s infinite;
+}
+
+.dot:nth-child(2) { animation-delay: 0.3s; }
+.dot:nth-child(3) { animation-delay: 0.6s; }
+
+.loading-bar {
+  --height: 20px;
+  width: 0%;
+  height: var(--height);
+  background: linear-gradient(0deg, rgb(225, 100, 11) 0%, rgba(249, 199, 79, 1) 100%);
+  border-radius: calc(var(--height) / 2);
+  animation: loading 4s ease-out infinite;
+}
+
+@keyframes loading {
+  0% { width: 0; }
+  80% { width: 100%; }
+  100% { width: 100%; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+/* Navigation */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 2em 15%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(15, 15, 15, 0.8);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+nav.visible { opacity: 1; }
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+}
+
+.logo-img {
+  height: 50px;
+  width: auto;
+  transition: transform 0.3s ease-in-out;
+}
+
+.logo-img:hover { transform: scale(1.1); }
+
+.logo {
+  font-size: 2em;
+  color: white;
+  font-weight: 800;
+  opacity: 0.8;
+  transition: 0.2s ease-in-out;
+}
+
+.logo:hover { opacity: 1; }
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 3em;
+}
+
+nav ul a {
+  color: white;
+  opacity: 0.7;
+  transition: 0.2s ease-in-out;
+}
+
+nav ul a:hover { opacity: 1; }
+
+#menu {
+  color: white;
+  display: none;
+  font-size: 3em;
+  cursor: pointer;
+}
+
+/* Body Content */
+.body-content {
+  padding-top: 8em;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.body-content.active { opacity: 1; }
+
+/* Hero Section */
+.hero {
+  background: var(--accent-color);
+  color: #fff;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 50px;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+.btn {
+  padding: 12px 30px;
+  background: #000;
+  color: #fff;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.btn:hover { background: #555; }
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  color: #fef6f6;
+}
+
+.servicesclass {
+  background-color: var(--accent-color);
+}
+
+.ser { padding-top: 50px; }
+
+/* Service List Container */
+#service-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Service Card */
+.service-card {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.service-card h2 {
+  font-size: 1.8rem;
+  color: #03070a;
+  margin: 20px;
+}
+
+.service-card p {
+  font-size: 1rem;
+  color: #555;
+  margin: 15px 20px;
+  line-height: 1.6;
+}
+
+.service-card strong {
+  display: block;
+  font-size: 1.2rem;
+  color: #ed2d07;
+  margin: 10px 20px;
+}
+
+.service-card p:last-child {
+  font-size: 1rem;
+  color: #ffcc00;
+  margin: 10px 20px;
+}
+
+/* Button Style */
+.service-card button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #fff;
+  background: var(--accent-color);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 15px 20px;
+}
+
+.service-card button:hover {
+  background: #31342d;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.service-card button:active {
+  background: #030a11;
+  transform: scale(0.98);
+}
+
+/* Popup Styling */
+.popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  overflow: auto;
+}
+
+.popup-content {
+  background: white;
+  padding: 30px;
+  width: 80%;
+  max-width: 600px;
+  margin: 10% auto;
+  border-radius: 10px;
+  position: relative;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.5s;
+}
+
+.popup-content h2 { margin: 0 0 10px; }
+.popup-content p { font-size: 16px; color: #555; }
+.popup-content strong { display: block; margin: 10px 0; color: #333; }
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 25px;
+  color: #555;
+  cursor: pointer;
+}
+
+.close-btn:hover { color: #000; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* About Section */
+.about {
+  padding: 60px 10%;
+  background-color: var(--accent-color);
+  color: white;
+  text-align: center;
+}
+
+.about h2 {
+  font-size: 2.2em;
+  margin-bottom: 25px;
+  color: #fff;
+}
+
+.about p {
+  font-size: 1.1em;
+  max-width: 900px;
+  margin: 0 auto 20px;
+  line-height: 1.8;
+}
+
+.about .mission {
+  font-style: italic;
+  opacity: 0.9;
+  margin-top: 30px;
+}
+
+/* Contact Section */
+.contact {
+  padding: 60px 10%;
+  background-color: var(--accent-color);
+  color: white;
+  text-align: center;
+}
+
+.contact h2 {
+  font-size: 2.2em;
+  margin-bottom: 25px;
+  color: #fff;
+}
+
+.contact p {
+  font-size: 1.1em;
+  margin: 10px 0;
+}
+
+/* Chatbot Styles */
+#chatbot-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background: #0066cc;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+}
+
+#chatbot-icon:hover { transform: scale(1.1); }
+
+#chat-popup {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 400px;
+  height: 500px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  display: none;
+  flex-direction: column;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+#chat-header {
+  background: #0066cc;
+  color: white;
+  padding: 10px;
+  font-size: 18px;
+  text-align: center;
+}
+
+#chat-container {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  background: #f9f9f9;
+}
+
+.chat-message {
+  margin: 5px 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  max-width: 80%;
+}
+
+.chatbot {
+  background: #e1f5fe;
+  color: #0066cc;
+  align-self: flex-start;
+}
+
+.user {
+  background: #ffecb3;
+  color: #cc6600;
+  align-self: flex-end;
+}
+
+#input-container {
+  display: flex;
+  border-top: 1px solid #ccc;
+  padding: 10px;
+  background: #fff;
+}
+
+#user-input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+#input-container button {
+  padding: 8px 16px;
+  background: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#input-container button:hover { background: #005bb5; }
+
+/* Media Queries */
+@media (max-width: 968px) {
+  nav { padding: 1.5em 5%; }
+  #menu { display: block; }
+  .links {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 100%;
+      padding: 1em 3em;
+      background-color: rgba(0, 0, 0, 0.9);
+      flex-direction: column;
+      display: none;
+  }
+  .links.active { display: flex; }
+  .links a { margin: 1em 0; font-size: 1.5em; }
+  .service-card { width: 100%; }
+}
+
+@media (max-width: 768px) {
+  #service-list { grid-template-columns: 1fr; }
+}
