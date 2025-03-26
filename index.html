@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Urban/Rural Company</title>
-    <link rel="icon" type="image/png" href="{% static 'Screenshot 2025-03-16 183230.png' %}">
+    <link rel="icon" type="image/png" href="./Screenshot 2025-03-16 183230.png">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+<!--     <link rel="stylesheet" href="{% static 'style.css' %}"> -->
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -25,6 +25,7 @@
     <nav>
         <div class="logo-container">
             <img src="{% static 'Screenshot 2025-03-16 183230.png' %}" alt="Logo" class="logo-img">
+            <img src="./Screenshot 2025-03-16 183230.png" alt="Logo" class="logo-img">
             <a href="#" class="logo">Urban/Rural Company</a>
         </div>
         <ul class="links">
@@ -103,7 +104,8 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{% static 'script.js' %}"></script>
+<!--     <script src="{% static 'script.js' %}"></script> -->
+    <script src="./script.js"></script>
     <script>
       
 
@@ -111,7 +113,7 @@
 
 
         // Fetch JSON from external file
-       fetch('{% static "services.json" %}')
+       fetch('./services.json')
          .then(response => response.json())
          .then(data => {
            console.log(data);
