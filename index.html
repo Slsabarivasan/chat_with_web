@@ -1,0 +1,262 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urban/Rural Company</title>
+    <link rel="icon" type="image/png" href="./Screenshot 2025-03-16 183230.png">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    {% csrf_token %} <!-- Ensures CSRF cookie is set -->
+
+    <!-- Loader -->
+    <div class="loader">
+        <div class="loading-text">
+            Loading<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
+        </div>
+        <div class="loading-bar"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo-container">
+
+            <img src="./Screenshot 2025-03-16 183230.png" alt="Logo" class="logo-img">
+            <a href="#" class="logo">Urban/Rural Company</a>
+        </div>
+        <ul class="links">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Service</a>
+            <a href="#contact">Contact</a>
+        </ul>
+        <i class="bx bx-menu" id="menu"></i>
+    </nav>
+
+    <!-- Body Content -->
+    <div class="body-content">
+        <section id="home" class="hero">
+            <h1>Professional Services at Your Fingertips</h1>
+            <p>We offer reliable and quality services tailored for your needs.</p>
+            <a href="#services" class="btn">Explore Services</a>
+        </section><br><br><br>
+
+        <section class="about" id="about">
+            <h2>About Us</h2>
+            <p>
+                Urban/Rural Company was founded with a vision to bridge the gap between urban convenience and rural charm. We specialize in delivering high-quality home-related services, from cleaning and maintenance to landscaping and smart home solutions. Our team is dedicated to making your living space comfortable, functional, and beautiful—no matter where you call home.
+            </p>
+            <p>
+                With years of experience and a passion for excellence, we cater to the unique needs of both urban dwellers and rural residents. Our services are designed to be reliable, affordable, and tailored to your lifestyle.
+            </p>
+            <p class="mission">
+                "Our mission is to enhance lives by providing exceptional services that blend innovation with tradition."
+            </p>
+        </section><br><br><br>
+
+        <section class="servicesclass" id="services">
+            <h1 class="ser">Our Services</h1>
+            <div id="service-list"></div>
+            <div id="popup" class="popup">
+                <div class="popup-content">
+                    <span class="close-btn">×</span>
+                    <h2 id="popup-title">Service Title</h2>
+                    <p id="popup-description">Service Description</p>
+                    <strong id="popup-price"></strong>
+                    <p id="popup-availability"></p>
+                    <p id="popup-rating"></p>
+                    <p id="popup-location"></p>
+                    <p id="popup-duration"></p>
+                    <p id="popup-contact"></p>
+                    <p id="popup-features"></p>
+                    <p id="popup-techniques"></p>
+                    <p id="popup-reviews"></p>
+                    <p id="popup-perks"></p>
+                    <p id="popup-notes"></p>
+                </div>
+            </div>
+        </section><br><br><br>
+
+        <section class="contact" id="contact">
+            <!-- Add contact content here if needed -->
+           
+        </section>
+
+        <!-- Chatbot Icon -->
+        <div id="chatbot-icon" onclick="toggleChat()">💬</div>
+
+        <!-- Chatbot Popup -->
+        <div id="chat-popup">
+            <div id="chat-header">Chatbot Assistant</div>
+            <div id="chat-container">
+                <div class="chat-message chatbot">Chatbot: Hello! I am your virtual assistant.</div>
+                <div class="chat-message chatbot">Chatbot: What's your name?</div>
+            </div>
+            <div id="input-container">
+                <input type="text" id="user-input" placeholder="Type your message...">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+<!--     <script src="{% static 'script.js' %}"></script> -->
+    <script src="./script.js"></script>
+    <script>
+      
+
+
+
+
+        // Fetch JSON from external file
+       fetch('./services.json')
+         .then(response => response.json())
+         .then(data => {
+           console.log(data);
+       
+           const serviceContainer = document.getElementById('service-list');
+           const popup = document.getElementById('popup');
+           const closeBtn = document.querySelector('.close-btn');
+       
+           // Render services dynamically
+           data.forEach((service, index) => {
+             const div = document.createElement('div');
+             div.classList.add('service-card');
+       
+             // Add button with a data-index attribute
+             div.innerHTML = `
+               <h2>${service.title}</h2>
+               <p>${service.description}</p>
+               <strong>Price: ${service.price}</strong>
+               <p>Rating: ${service.rating}</p>
+               
+               <button class="learn-more-btn" data-index="${index}">Learn More</button>
+             `;
+       
+             serviceContainer.appendChild(div);
+           });
+       
+           // Attach event listeners to buttons AFTER rendering
+           document.querySelectorAll('.learn-more-btn').forEach(button => {
+             button.addEventListener('click', () => {
+               const index = button.getAttribute('data-index');
+               openPopup(index, data);
+             });
+           });
+       
+           // Open popup function
+           window.openPopup = (index, data) => {
+             const service = data[index];
+             document.getElementById('popup-title').textContent = service.title;
+             document.getElementById('popup-description').textContent = service.description;
+             document.getElementById('popup-price').textContent = `Price: ${service.price}`;
+             document.getElementById('popup-availability').textContent = `Availability: ${service.availability}`;
+             document.getElementById('popup-rating').textContent = `Rating: ${service.rating}`;
+             document.getElementById('popup-location').textContent = `Location: ${service.location}`;
+             document.getElementById('popup-duration').textContent = `Duration: ${service.duration}`;
+             document.getElementById('popup-contact').textContent = `Contact: ${service.contact}`;
+             document.getElementById('popup-features').textContent = `Features: ${service.features}`;
+             document.getElementById('popup-techniques').textContent = `Techniques: ${service.techniques}`;
+             document.getElementById('popup-reviews').textContent = `Reviews: ${service.reviews}`;
+             document.getElementById('popup-perks').textContent = `Perks: ${service.perks}`;
+             document.getElementById('popup-notes').textContent = `Notes: ${service.notes}`;
+             popup.style.display = 'block';  // Show the popup
+           };
+       
+           // Close the popup
+           closeBtn.onclick = () => {
+             popup.style.display = 'none';
+           };
+       
+           // Close the popup when clicking outside of it
+           window.onclick = (event) => {
+             if (event.target === popup) {
+               popup.style.display = 'none';
+             }
+           };
+         })
+         .catch(error => console.error('Error fetching JSON:', error));
+       
+       
+        
+        // Toggle Chatbot Popup
+        function toggleChat() {
+            const popup = document.getElementById("chat-popup");
+            popup.style.display = (popup.style.display === "none" || popup.style.display === "") ? "flex" : "none";
+        }
+    
+        // Get CSRF Token for Django
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        
+        const csrftoken = getCookie('csrftoken');
+    
+        // Append Messages to Chat
+        function appendMessage(message, sender) {
+            const container = document.getElementById("chat-container");
+            const messageDiv = document.createElement("div");
+            messageDiv.className = `chat-message ${sender}`;
+            messageDiv.textContent = message;
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+    
+        // Send Message to Django Server
+        async function sendMessage() {
+            const input = document.getElementById("user-input");
+            const message = input.value.trim();
+            if (!message) return;
+    
+            input.value = "";
+            appendMessage(`You: ${message}`, "user");
+    
+            try {
+                const response = await fetch('/chat/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+    
+                const data = await response.json();
+    
+                if (data.messages) {
+                    data.messages.forEach(msg => appendMessage(msg, "chatbot"));
+                } else {
+                    console.error("No messages in response:", data);
+                }
+            } catch (error) {
+                console.error("Fetch error:", error);
+            }
+        }
+    
+        // Listen for Enter Key
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("user-input").addEventListener("keypress", function (event) {
+                if (event.key === "Enter") {
+                    sendMessage();
+                }
+            });
+        });
+    </script>
+    
+</body>
+</html>
